@@ -14,10 +14,8 @@
             "type": "gadget"
         },
         {
-            "name": "pc-kernel",
-            "type": "kernel",
-            "default-channel": "24/stable",
-            "id": "pYVQrBcKmBa0mZ4CCN7ExT6jH8rY1hza"
+            "name": "azure-kernel",
+            "type": "kernel"
         },
         {
             "name": "core24",
@@ -35,7 +33,8 @@
             "name": "console-conf",
             "type": "app",
             "default-channel": "24/stable",
-            "id": "ASctKBEHzVt3f1pbZLoekCvcigRjtuqw"
+            "id": "ASctKBEHzVt3f1pbZLoekCvcigRjtuqw",
+	    "presence": "optional"
         }
     ]
 }
