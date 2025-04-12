@@ -109,12 +109,15 @@ function create_image_version_from_disk() {
 		--os-type Linux \
 		--os-state generalized
 
+    image_timestamp=$(date --date=@$timestamp_in_seconds +'%Y.%m.%d%H%M%S')
+    timestamp=$(date --date=@$timestamp_in_seconds +'%Y%m%d%H%M%S')
+
 	az sig image-version create \
 		--resource-group $resource_group_name \
 		--gallery-name ${resource_group_name}_image_gallery \
 		--gallery-image-definition ${resource_group_name}-image-definition \
-		--gallery-image-version $(date --date=@$timestamp_in_seconds +'%Y.%m.%d%H%M%S') \
-		--os-snapshot $(az disk show --name $disk_name --resource-group $resource_group_name --query "id" | tr -d '"')
+		--gallery-image-version $image_timestamp \
+		--os-snapshot $(az disk show --name $disk_name-$timestamp --resource-group $resource_group_name --query "id" | tr -d '"')
 }
 
 function create_image_gallery_image_version() {
@@ -135,4 +138,8 @@ function create_image_gallery_image_version() {
 	create_image_version_from_disk $resource_group_name $disk_name $timestamp_in_seconds || return $?
 }
 
+function create_azure_vm() {
+	image_id=$(az sig image-version list -g "$AZURE_RESOURCE_GROUP_NAME" -r "$AZURE_RESOURCE_GROUP_NAME"_image_gallery -i "$AZURE_RESOURCE_GROUP_NAME"-image-definition --query "[0].id" --output tsv)
+    az vm create -g "$AZURE_RESOURCE_GROUP_NAME" -n "$AZURE_VM_NAME" --image $image_id --size Standard_B2as_v2
+}
 
