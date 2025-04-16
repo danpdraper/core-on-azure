@@ -39,7 +39,7 @@ $ AZURE_RESOURCE_GROUP_NAME=<name of target resource group for disk> AZURE_VM_NA
 Get the public IP of the VM from the output of the previous step or with something like:
 
 ```bash
-az vm list-ip-addresses -g <resource group> -n <vm name> --query "[0].virtualMachine.network.publicIpAddresses[0].ipAddress"
+az vm show -d -n <vm name> -g <resource group> --query publicIps
 ```
 
 The above should have created a new ssh key under `~/.ssh`
