@@ -56,9 +56,9 @@ azure_vm:
 	fi
 	source $(functions_file_path) ; create_azure_vm
 
-.PHONY: run
+.PHONY: local_vm
 
-run:
+local_vm:
 	# https://ubuntu.com/core/docs/testing-with-qemu
 	qemu-system-x86_64 \
 		-enable-kvm \
