@@ -139,7 +139,7 @@ function create_image_gallery_image_version() {
 }
 
 function create_azure_vm() {
-	image_id=$(az sig image-version list -g "$AZURE_RESOURCE_GROUP_NAME" -r "$AZURE_RESOURCE_GROUP_NAME"_image_gallery -i "$AZURE_RESOURCE_GROUP_NAME"-image-definition --query "[0].id" --output tsv)
-    az vm create -g "$AZURE_RESOURCE_GROUP_NAME" -n "$AZURE_VM_NAME" --image $image_id --size Standard_B2as_v2
+	image_def_id=$(az sig image-definition show -g "$AZURE_RESOURCE_GROUP_NAME" -r "$AZURE_RESOURCE_GROUP_NAME"_image_gallery -i "$AZURE_RESOURCE_GROUP_NAME"-image-definition --query "id" --output tsv)
+	az vm create -g "$AZURE_RESOURCE_GROUP_NAME" -n "$AZURE_VM_NAME" --image $image_def_id --size Standard_B2as_v2
 }
 

@@ -43,7 +43,6 @@ image_gallery_image_version:
 			$(AZURE_RESOURCE_GROUP_NAME) \
 			$(AZURE_DISK_NAME)
 
-
 .PHONY: azure_vm
 
 azure_vm:
@@ -56,7 +55,6 @@ azure_vm:
 		exit 1 ; \
 	fi
 	source $(functions_file_path) ; create_azure_vm
-
 
 .PHONY: run
 

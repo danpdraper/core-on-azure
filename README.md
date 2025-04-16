@@ -1,6 +1,6 @@
-# Ubuntu Core based cloud image
+# Ubuntu-Core-based cloud image
 
-This repo is used to build an Ubuntu Core based image meant to be used in an Azure VM.
+This repo is used to build an Ubuntu-Core-based image meant to be used in an Azure VM.
 
 ## Build the raw image
 
