@@ -38,7 +38,39 @@ image_gallery_image_version:
 	fi
 	source $(functions_file_path) ; \
 		create_image_gallery_image_version \
-			$(makefile_directory_path)/pc.img \
-			$(makefile_directory_path)/pc.vhd \
+			$(makefile_directory_path)/azure.img \
+			$(makefile_directory_path)/azure.vhd \
 			$(AZURE_RESOURCE_GROUP_NAME) \
 			$(AZURE_DISK_NAME)
+
+.PHONY: azure_vm
+
+azure_vm:
+	@if [ -z "$(AZURE_RESOURCE_GROUP_NAME)" ] ; then \
+		echo "Please assign the name of the resource group in which you would like the vm to be created to the AZURE_RESOURCE_GROUP_NAME environment variable." ; \
+		exit 1 ; \
+	fi
+	@if [ -z "$(AZURE_VM_NAME)" ] ; then \
+		echo "Please assign the desired vm name to the AZURE_VM_NAME environment variable." ; \
+		exit 1 ; \
+	fi
+	source $(functions_file_path) ; create_azure_vm
+
+.PHONY: local_vm
+
+local_vm:
+	# https://ubuntu.com/core/docs/testing-with-qemu
+	qemu-system-x86_64 \
+		-enable-kvm \
+		-smp 1 \
+		-m 2048 \
+		-machine q35 \
+		-cpu host \
+		-global ICH9-LPC.disable_s3=1 \
+		-net nic,model=virtio \
+		-net user,hostfwd=tcp::8022-:22 \
+		-drive file=OVMF_CODE_4M.fd,if=pflash,format=raw,unit=0,readonly=on \
+		-drive file=OVMF_VARS_4M.ms.fd,if=pflash,format=raw,unit=1 \
+		-drive "file=azure.img",if=none,format=raw,id=disk1 \
+		-device virtio-blk-pci,drive=disk1,bootindex=1 \
+		-serial mon:stdio
