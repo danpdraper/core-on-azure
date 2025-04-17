@@ -109,8 +109,8 @@ function create_image_version_from_disk() {
 		--os-type Linux \
 		--os-state generalized
 
-    image_timestamp=$(date --date=@$timestamp_in_seconds +'%Y.%m.%d%H%M%S')
-    timestamp=$(date --date=@$timestamp_in_seconds +'%Y%m%d%H%M%S')
+	image_timestamp=$(date --date=@$timestamp_in_seconds +'%Y.%m.%d%H%M%S')
+	timestamp=$(date --date=@$timestamp_in_seconds +'%Y%m%d%H%M%S')
 
 	az sig image-version create \
 		--resource-group $resource_group_name \
@@ -142,4 +142,3 @@ function create_azure_vm() {
 	image_def_id=$(az sig image-definition show -g "$AZURE_RESOURCE_GROUP_NAME" -r "$AZURE_RESOURCE_GROUP_NAME"_image_gallery -i "$AZURE_RESOURCE_GROUP_NAME"-image-definition --query "id" --output tsv)
 	az vm create -g "$AZURE_RESOURCE_GROUP_NAME" -n "$AZURE_VM_NAME" --image $image_def_id --size Standard_B2as_v2
 }
-
