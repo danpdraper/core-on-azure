@@ -76,7 +76,7 @@ function publish_disk() {
 			--name $full_disk_name \
 			--resource-group $resource_group_name \
 			--access-level Write \
-			--duration-in-seconds 86400 | jq --raw-output .accessSas)
+			--duration-in-seconds 86400 | jq --raw-output .accessSAS)
 
 	azcopy copy $local_disk_path $disk_access_sas_url --blob-type PageBlob || return $?
 
