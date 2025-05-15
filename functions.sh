@@ -66,7 +66,7 @@ function publish_disk() {
 		--location westeurope \
 		--zone 3 \
 		--os-type Linux \
-		--for-upload \
+		--upload-type Upload \
 		--upload-size-bytes $disk_size \
 		--sku standard_lrs \
 		--hyper-v-generation V2 || return $?
