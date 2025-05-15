@@ -66,7 +66,7 @@ function publish_disk() {
 		--location westeurope \
 		--zone 3 \
 		--os-type Linux \
-		--for-upload \
+		--upload-type Upload \
 		--upload-size-bytes $disk_size \
 		--sku standard_lrs \
 		--hyper-v-generation V2 || return $?
@@ -76,7 +76,7 @@ function publish_disk() {
 			--name $full_disk_name \
 			--resource-group $resource_group_name \
 			--access-level Write \
-			--duration-in-seconds 86400 | jq --raw-output .accessSas)
+			--duration-in-seconds 86400 | jq --raw-output .accessSAS)
 
 	azcopy copy $local_disk_path $disk_access_sas_url --blob-type PageBlob || return $?
 
